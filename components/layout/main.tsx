@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { LayoutProps } from '../../models/common'
-import { Stack } from '@mui/material'
+import { Container, Stack } from '@mui/material'
 import { Box } from '@mui/system'
 import { Header, Footer } from '../common'
 
