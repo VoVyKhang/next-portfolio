@@ -48,5 +48,15 @@ export const theme = createTheme({
         },
       },
     },
+
+    // MuiTypography: {
+    //   styleOverrides:{
+    //     root: {
+    //       color:{
+
+    //       }
+    //     }
+    //   }
+    // }
   },
 })
