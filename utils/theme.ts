@@ -16,6 +16,7 @@ export const theme = createTheme({
       main: '#FF6464',
     },
     secondary: {
+      light: '#EDF7FA',
       main: '#00ABCC',
     },
     error: {
@@ -23,7 +24,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: 'Heebo, sans-serif',
   },
 
   components: {
@@ -49,14 +50,18 @@ export const theme = createTheme({
       },
     },
 
-    // MuiTypography: {
-    //   styleOverrides:{
-    //     root: {
-    //       color:{
-
-    //       }
-    //     }
-    //   }
-    // }
+    MuiButton: {
+      variants: [
+        {
+          props: {
+            variant: 'contained',
+            color: 'primary',
+          },
+          style: {
+            color: 'white',
+          },
+        },
+      ],
+    },
   },
 })

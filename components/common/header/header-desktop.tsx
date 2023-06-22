@@ -19,6 +19,7 @@ export function HeaderDesktop() {
                   color: `${
                     router.pathname === route.path ? 'primary.main' : '#000'
                   }`,
+                  fontWeight: 'medium',
                 }}
               >
                 {route.label}
