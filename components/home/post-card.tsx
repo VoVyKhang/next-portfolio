@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Card, CardContent, Typography, Divider } from '@mui/material'
+import { Card, CardContent, Typography, Divider, Stack } from '@mui/material'
 import { Post } from '../../models'
 import { format } from 'date-fns'
 
@@ -16,13 +16,15 @@ export function PostCard({ post }: IPostCardProps) {
         <Typography variant="h5" fontWeight="bold">
           {post.title}
         </Typography>
-        <Typography variant="body1" my={2} sx={{ display: 'flex' }}>
-          {format(Number(post.publishedDate), 'dd MMM yyyy')}
 
+        <Stack my={2} direction="row">
+          <Typography variant="body1">
+            {format(Number(post.publishedDate), 'dd MMM yyyy')}
+          </Typography>
           <Divider orientation="vertical" sx={{ mx: 2 }} flexItem />
+          <Typography variant="body1">{post.tagList.join(',')}</Typography>
+        </Stack>
 
-          {post.tagList.join(',')}
-        </Typography>
         <Typography variant="body2">{post.description}</Typography>
       </CardContent>
     </Card>
