@@ -3,6 +3,14 @@ import * as React from 'react'
 import { getPostList } from '../../utils/posts'
 import { Post } from '../../models'
 
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import rehypeDocument from 'rehype-document'
+import rehypeFormat from 'rehype-format'
+import rehypeStringify from 'rehype-stringify'
+import { Container } from '@mui/material'
+
 export interface IBlogDetailPageProps {
   post: Post
 }
@@ -10,13 +18,13 @@ export interface IBlogDetailPageProps {
 export default function BlogDetailPage({ post }: IBlogDetailPageProps) {
   if (!post) return
   return (
-    <div>
+    <Container>
       <h1>Post detail page</h1>
       <p>{post?.author?.name}</p>
       <p>{post.title}</p>
       <p>{post.description}</p>
-      <p>{post.mdContent}</p>
-    </div>
+      <div dangerouslySetInnerHTML={{ __html: post.htmlContent || '' }}></div>
+    </Container>
   )
 }
 
@@ -38,6 +46,16 @@ export const getStaticProps: GetStaticProps<IBlogDetailPageProps> = async (
 
   const post = postList.find((post) => post.slug === slug)
   if (!post) return { notFound: true }
+
+  const file = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeDocument, { title: 'Blog details page' })
+    .use(rehypeFormat)
+    .use(rehypeStringify)
+    .process(post.mdContent || '')
+
+  post.htmlContent = file.toString()
 
   return {
     props: {
