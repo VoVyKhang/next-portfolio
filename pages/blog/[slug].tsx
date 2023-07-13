@@ -13,6 +13,9 @@ import { Container } from '@mui/material'
 import remarkToc from 'remark-toc'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings/lib'
+import remarkPrism from 'remark-prism'
+import Script from 'next/script'
+import { Box } from '@mui/system'
 
 export interface IBlogDetailPageProps {
   post: Post
@@ -21,13 +24,16 @@ export interface IBlogDetailPageProps {
 export default function BlogDetailPage({ post }: IBlogDetailPageProps) {
   if (!post) return
   return (
-    <Container>
-      <h1>Post detail page</h1>
-      <p>{post?.author?.name}</p>
-      <p>{post.title}</p>
-      <p>{post.description}</p>
-      <div dangerouslySetInnerHTML={{ __html: post.htmlContent || '' }}></div>
-    </Container>
+    <Box>
+      <Container>
+        <h1>Post detail page</h1>
+        <p>{post?.author?.name}</p>
+        <p>{post.title}</p>
+        <p>{post.description}</p>
+        <div dangerouslySetInnerHTML={{ __html: post.htmlContent || '' }}></div>
+      </Container>
+      <Script src="/prism.js" strategy="afterInteractive"></Script>
+    </Box>
   )
 }
 
@@ -53,6 +59,7 @@ export const getStaticProps: GetStaticProps<IBlogDetailPageProps> = async (
   const file = await unified()
     .use(remarkParse)
     .use(remarkToc, { heading: 'agenda.*' })
+    .use(remarkPrism, { plugins: ['line-numbers'] })
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })

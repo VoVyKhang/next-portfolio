@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/prism.css'
 
 import { CacheProvider } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
