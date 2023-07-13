@@ -16,6 +16,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings/lib'
 import remarkPrism from 'remark-prism'
 import Script from 'next/script'
 import { Box } from '@mui/system'
+import { Seo } from '../../components/common'
 
 export interface IBlogDetailPageProps {
   post: Post
@@ -25,8 +26,16 @@ export default function BlogDetailPage({ post }: IBlogDetailPageProps) {
   if (!post) return
   return (
     <Box>
+      <Seo
+        data={{
+          title: `${post.title} | Blog`,
+          thumbnalUrl: post.thumbnailUrl || '',
+          url: '',
+          description: post.description,
+        }}
+      />
+
       <Container>
-        <h1>Post detail page</h1>
         <p>{post?.author?.name}</p>
         <p>{post.title}</p>
         <p>{post.description}</p>
